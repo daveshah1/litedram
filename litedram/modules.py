@@ -445,3 +445,20 @@ class MT40A512M16(SDRAMModule):
         "2400": _SpeedgradeTimings(tRP=13.32, tRCD=13.32, tWR=15, tRFC=(None, 350), tFAW=(20, 25), tRAS=32),
     }
     speedgrade_timings["default"] = speedgrade_timings["2400"]
+
+
+class MT40A512M8(SDRAMModule):
+    memtype = "DDR4"
+    # geometry
+    ngroupbanks = 4
+    ngroups     = 4
+    nbanks      = ngroups * ngroupbanks
+    nrows       = 32768
+    ncols       = 1024
+    # timings
+    technology_timings = _TechnologyTimings(tREFI=64e6/8192, tWTR=(4, 7.5), tCCD=(4, None), tRRD=(4, 4.9))
+    speedgrade_timings = {
+        "2400": _SpeedgradeTimings(tRP=13.32, tRCD=13.32, tWR=15, tRFC=(None, 350), tFAW=(20, 25), tRAS=32),
+        "2666": _SpeedgradeTimings(tRP=13.50, tRCD=13.50, tWR=15, tRFC=(None, 350), tFAW=(20, 21), tRAS=32)
+    }
+    speedgrade_timings["default"] = speedgrade_timings["2400"]

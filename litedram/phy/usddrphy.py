@@ -61,7 +61,7 @@ class DDR4DFIMux(Module):
 
 
 class USDDRPHY(Module, AutoCSR):
-    def __init__(self, pads, memtype="DDR3", sys_clk_freq=100e6, iodelay_clk_freq=200e6, cmd_latency=0):
+    def __init__(self, pads, memtype="DDR3", device="ULTRASCALE", sys_clk_freq=100e6, iodelay_clk_freq=200e6, cmd_latency=0):
         tck = 2/(2*4*sys_clk_freq)
         addressbits = len(pads.a)
         if memtype == "DDR4":
@@ -137,6 +137,7 @@ class USDDRPHY(Module, AutoCSR):
             Instance("OSERDESE3",
                 p_DATA_WIDTH=8, p_INIT=0,
                 p_IS_CLK_INVERTED=0, p_IS_CLKDIV_INVERTED=0, p_IS_RST_INVERTED=0,
+                p_SIM_DEVICE=device,
 
                 o_OQ=clk_o_nodelay,
                 i_RST=ResetSignal(),
@@ -146,6 +147,7 @@ class USDDRPHY(Module, AutoCSR):
             Instance("ODELAYE3",
                 p_CASCADE="NONE", p_UPDATE_MODE="ASYNC", p_REFCLK_FREQUENCY=iodelay_clk_freq/1e6,
                 p_DELAY_FORMAT="TIME", p_DELAY_TYPE="VARIABLE", p_DELAY_VALUE=0,
+                p_SIM_DEVICE=device,
 
                 i_CLK=ClockSignal(),
                 i_INC=1, i_EN_VTC=self._en_vtc.storage,
@@ -168,6 +170,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("OSERDESE3",
                     p_DATA_WIDTH=8, p_INIT=0,
                     p_IS_CLK_INVERTED=0, p_IS_CLKDIV_INVERTED=0, p_IS_RST_INVERTED=0,
+                    p_SIM_DEVICE=device,
 
                     o_OQ=a_o_nodelay,
                     i_RST=ResetSignal(),
@@ -180,6 +183,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("ODELAYE3",
                     p_CASCADE="NONE", p_UPDATE_MODE="ASYNC", p_REFCLK_FREQUENCY=iodelay_clk_freq/1e6,
                     p_DELAY_FORMAT="TIME", p_DELAY_TYPE="VARIABLE", p_DELAY_VALUE=0,
+                    p_SIM_DEVICE=device,
 
                     i_CLK=ClockSignal(),
                     i_INC=1, i_EN_VTC=self._en_vtc.storage,
@@ -202,6 +206,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("OSERDESE3",
                     p_DATA_WIDTH=8, p_INIT=0,
                     p_IS_CLK_INVERTED=0, p_IS_CLKDIV_INVERTED=0, p_IS_RST_INVERTED=0,
+                    p_SIM_DEVICE=device,
 
                     o_OQ=ba_o_nodelay,
                     i_RST=ResetSignal(),
@@ -214,6 +219,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("ODELAYE3",
                     p_CASCADE="NONE", p_UPDATE_MODE="ASYNC", p_REFCLK_FREQUENCY=iodelay_clk_freq/1e6,
                     p_DELAY_FORMAT="TIME", p_DELAY_TYPE="VARIABLE", p_DELAY_VALUE=0,
+                    p_SIM_DEVICE=device,
 
                     i_CLK=ClockSignal(),
                     i_INC=1, i_EN_VTC=self._en_vtc.storage,
@@ -237,6 +243,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("OSERDESE3",
                     p_DATA_WIDTH=8, p_INIT=0,
                     p_IS_CLK_INVERTED=0, p_IS_CLKDIV_INVERTED=0, p_IS_RST_INVERTED=0,
+                    p_SIM_DEVICE=device,
 
                     o_OQ=x_o_nodelay,
                     i_RST=ResetSignal(),
@@ -249,6 +256,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("ODELAYE3",
                     p_CASCADE="NONE", p_UPDATE_MODE="ASYNC", p_REFCLK_FREQUENCY=iodelay_clk_freq/1e6,
                     p_DELAY_FORMAT="TIME", p_DELAY_TYPE="VARIABLE", p_DELAY_VALUE=0,
+                    p_SIM_DEVICE=device,
 
                     i_CLK=ClockSignal(),
                     i_INC=1, i_EN_VTC=self._en_vtc.storage,
@@ -278,6 +286,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("OSERDESE3",
                     p_DATA_WIDTH=8, p_INIT=0,
                     p_IS_CLK_INVERTED=0, p_IS_CLKDIV_INVERTED=0, p_IS_RST_INVERTED=0,
+                    p_SIM_DEVICE=device,
 
                     o_OQ=dm_o_nodelay,
                     i_RST=ResetSignal(),
@@ -292,6 +301,7 @@ class USDDRPHY(Module, AutoCSR):
                     p_CASCADE="NONE", p_UPDATE_MODE="ASYNC", p_REFCLK_FREQUENCY=iodelay_clk_freq/1e6,
                     p_IS_CLK_INVERTED=0, p_IS_RST_INVERTED=0,
                     p_DELAY_FORMAT="TIME", p_DELAY_TYPE="VARIABLE", p_DELAY_VALUE=0,
+                    p_SIM_DEVICE=device,
 
                     i_CLK=ClockSignal(),
                     i_INC=1, i_EN_VTC=self._en_vtc.storage,
@@ -321,6 +331,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("OSERDESE3",
                     p_DATA_WIDTH=8, p_INIT=0,
                     p_IS_CLK_INVERTED=0, p_IS_CLKDIV_INVERTED=0, p_IS_RST_INVERTED=0,
+                    p_SIM_DEVICE=device,
 
                     o_OQ=dqs_nodelay, o_T_OUT=dqs_t,
                     i_RST=ResetSignal(),
@@ -335,6 +346,7 @@ class USDDRPHY(Module, AutoCSR):
                     p_CASCADE="NONE", p_UPDATE_MODE="ASYNC", p_REFCLK_FREQUENCY=iodelay_clk_freq/1e6,
                     p_IS_CLK_INVERTED=0, p_IS_RST_INVERTED=0,
                     p_DELAY_FORMAT="TIME", p_DELAY_TYPE="VARIABLE", p_DELAY_VALUE=int(tck*1e12/4),
+                    p_SIM_DEVICE=device,
 
                     i_CLK=ClockSignal(),
                     i_INC=1, i_EN_VTC=self._en_vtc.storage,
@@ -372,6 +384,7 @@ class USDDRPHY(Module, AutoCSR):
                 Instance("OSERDESE3",
                     p_DATA_WIDTH=8, p_INIT=0,
                     p_IS_CLK_INVERTED=0, p_IS_CLKDIV_INVERTED=0, p_IS_RST_INVERTED=0,
+                    p_SIM_DEVICE=device,
 
                     o_OQ=dq_o_nodelay, o_T_OUT=dq_t,
                     i_RST=ResetSignal(),
@@ -386,6 +399,7 @@ class USDDRPHY(Module, AutoCSR):
                     p_IS_CLK_INVERTED=0,
                     p_IS_CLK_B_INVERTED=1,
                     p_DATA_WIDTH=8,
+                    p_SIM_DEVICE=device,
 
                     i_D=dq_i_delayed,
                     i_RST=ResetSignal(),
@@ -399,6 +413,7 @@ class USDDRPHY(Module, AutoCSR):
                     p_CASCADE="NONE", p_UPDATE_MODE="ASYNC", p_REFCLK_FREQUENCY=iodelay_clk_freq/1e6,
                     p_IS_CLK_INVERTED=0, p_IS_RST_INVERTED=0,
                     p_DELAY_FORMAT="TIME", p_DELAY_TYPE="VARIABLE", p_DELAY_VALUE=0,
+                    p_SIM_DEVICE=device,
 
                     i_CLK=ClockSignal(),
                     i_INC=1, i_EN_VTC=self._en_vtc.storage,
@@ -412,6 +427,7 @@ class USDDRPHY(Module, AutoCSR):
                     p_IS_CLK_INVERTED=0, p_IS_RST_INVERTED=0,
                     p_DELAY_FORMAT="TIME", p_DELAY_SRC="IDATAIN",
                     p_DELAY_TYPE="VARIABLE", p_DELAY_VALUE=0,
+                    p_SIM_DEVICE=device,
 
                     i_CLK=ClockSignal(),
                     i_INC=1, i_EN_VTC=self._en_vtc.storage,
